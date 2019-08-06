@@ -133,8 +133,44 @@ class WhatsAppController{
         this.el.formPanelAddContact.on('submit', e=>{
             e.preventDefault();
 
-            
+
         });
+
+        this.el.contactsMessagesList.querySelectorAll('.contact-item').forEach(item=>{
+            item.on('click', e=>{
+                this.el.home.hide();
+                this.el.main.css({
+                    display: 'flex'
+                });
+            });
+        });
+
+        this.el.btnAttach.on('click', e=>{
+            e.stopPropagation();
+            this.el.menuAttach.addClass('open');
+            document.addEventListener('click', this.closeMenuAttach.bind(this));
+        });
+
+        this.el.btnAttachPhoto.on('click', e=>{
+            console.log('photo');
+        });
+
+        this.el.btnAttachCamera.on('click', e=>{
+            console.log('Camera');
+        });
+
+        this.el.btnAttachDocument.on('click', e=>{
+            console.log('Document');
+        });
+
+        this.el.btnAttachContact.on('click', e=>{
+            console.log('Contact');
+        });
+    }
+
+    closeMenuAttach(e){
+        document.removeEventListener('click', this.closeMenuAttach);
+        this.el.menuAttach.removeClass('open');
     }
 
     closeAllLeftPanel(){
