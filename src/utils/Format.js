@@ -1,4 +1,4 @@
-class Format{
+export class Format{
     /**
      * 
      * @param {recebe uma string para transformar em cameCase} text 
