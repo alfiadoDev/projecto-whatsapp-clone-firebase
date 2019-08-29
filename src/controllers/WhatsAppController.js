@@ -20,18 +20,31 @@ export class WhatsAppController{
 
     initAuth(){
         this._firebase.initAuth().then(response=>{
-            this._user = new User();
-            let userRef = User.findByEmail(response.user.email);
-            
-            userRef.set({
-                name: response.user.displayName,
-                email: response.user.email,
-                photo: response.user.photoURL
-            }).then(()=>{
+            this._user = new User(response.user.email);
+
+            this._user.on('datachange', data=>{
+                document.querySelector('title').innerHTML = data.name + ' whatsapp clone';
+                this.el.inputNamePanelEditProfile.innerHTML = data.name;
+                if(data.photo){
+                    let photo = this.el.imgPanelEditProfile;
+                    photo.src = data.photo;
+                    photo.show();
+                    this.el.imgDefaultPanelEditProfile.hide();
+                    let photo2 = this.el.myPhoto.querySelector('img');
+                    photo2.src = data.photo;
+                    photo2.show();
+                }
+            });
+
+            this._user.name = response.user.displayName;
+            this._user.email = response.user.email;
+            this._user.photo = response.user.photoURL;
+            this._user.save().then(()=>{
                 this.el.appContent.css({
                     display: 'flex'
                 });
             });
+
         }).catch(err=>{
             console.error(err);
         });
@@ -154,7 +167,12 @@ export class WhatsAppController{
         });
 
         this.el.btnSavePanelEditProfile.on('click', e=>{
-            console.log(this.el.inputNamePanelEditProfile.innerHTML);
+            this.el.inputNamePanelEditProfile.disabled = true;
+
+            this._user.name = this.el.inputNamePanelEditProfile.innerHTML;
+            this._user.save().then(()=>{
+                this.el.inputNamePanelEditProfile.disabled = false;
+            });
         });
 
         this.el.formPanelAddContact.on('submit', e=>{
