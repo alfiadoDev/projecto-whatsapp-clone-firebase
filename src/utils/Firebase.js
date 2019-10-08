@@ -10,7 +10,7 @@ export class Firebase{
             authDomain: "whatsapp-clone-cfa9c.firebaseapp.com",
             databaseURL: "https://whatsapp-clone-cfa9c.firebaseio.com",
             projectId: "whatsapp-clone-cfa9c",
-            storageBucket: "",
+            storageBucket: "gs://whatsapp-clone-cfa9c.appspot.com",
             messagingSenderId: "471779378851",
             appId: "1:471779378851:web:75e0a20e9241a540"
         };
@@ -20,10 +20,10 @@ export class Firebase{
     }
 
     init(){
-        if(!this._initialized){
+        if(!window._initializedFirebase){
             // Initialize Firebase
             firebase.initializeApp(this._config);
-            this._initialized = true;
+            window._initializedFirebase = true;
         }
         
     }
