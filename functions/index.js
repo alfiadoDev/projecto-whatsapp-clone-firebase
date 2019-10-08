@@ -84,7 +84,7 @@ let decode64 = function (input) {
     return unescape(output);
 }
 
-exports.saveLasteMessage = functions.firestore.document('/chats/{chatId}/messages/{messagesId}').onCreate((change, context)=>{
+exports.saveLasteMessage = functions.firestore.document('/chats/{chatId}/messages/{messagesId}').onCreate((snap, context)=>{
 
   let chatId = context.params.chatId;
   let messageId = context.params.messagesId;
