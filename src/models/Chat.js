@@ -32,11 +32,12 @@ export class Chat extends Model{
 
         return new Promise((s, f)=>{
             let users = {};
+            let time = new Date();
             users[btoa(myEmail)] = true;
             users[btoa(anyEmail)] = true;
             Chat.getRef().add({
                 users,
-                timeStamp: new Date()
+                timeStamp: time
             }).then(doc=>{
                 Chat.getRef().doc(doc.id).get().then(chat=>{
                     s(chat);
