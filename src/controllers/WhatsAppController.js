@@ -71,7 +71,7 @@ export class WhatsAppController{
 
             setTimeout(()=>{
                 if(n) n.close();
-            }, 10000);
+            }, 5000);
 
         }
 
